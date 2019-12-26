@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Resources;
 using System.Threading;
 using Xamarin.Essentials;
 using Xamarin.Forms;

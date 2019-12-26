@@ -90,34 +90,36 @@
 
             <!-- Track slider -->
             <Slider x:Name="AudioSlider"
+                    ValueChanged="AudioSlider_ValueChanged"
                     Grid.Row="8"
                     Grid.ColumnSpan="3"
                     ThumbImageSource="slider_thumb.png"/>
 
             <!-- Player action buttons -->
-            <Button Grid.Row="10"
-                    Grid.Column="0"
-                    BackgroundColor="Transparent"/>
             <Image Grid.Row="10"
                    Grid.Column="0"
                    Source="prev_ico.png"/>
-
-            <Button Grid.Row="9"
-                    Grid.RowSpan="2"
-                    Grid.Column="1"
+            <Button Grid.Row="10"
+                    Grid.Column="0"
                     BackgroundColor="Transparent"/>
+
             <Image Grid.Row="9"
                    Grid.RowSpan="2"
                    Grid.Column="1"
                    Source="play_ico.png"/>
-
-            <Button Grid.Row="10"
-                    Grid.Column="2"
+            <Button x:Name="PlayButton"
+                    Clicked="PlayButton_Clicked"
+                    Grid.Row="9"
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
                     BackgroundColor="Transparent"/>
+
             <Image Grid.Row="10"
                    Grid.Column="2"
                    Source="next_ico.png"/>
-
+            <Button Grid.Row="10"
+                    Grid.Column="2"
+                    BackgroundColor="Transparent"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

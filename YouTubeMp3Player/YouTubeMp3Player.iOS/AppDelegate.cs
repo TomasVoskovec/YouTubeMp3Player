@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using MediaManager;
 using UIKit;
 
 namespace YouTubeMp3Player.iOS
@@ -24,6 +25,8 @@ namespace YouTubeMp3Player.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+
+            CrossMediaManager.Current.Init();
 
             return base.FinishedLaunching(app, options);
         }
