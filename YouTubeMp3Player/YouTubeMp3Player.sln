@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeMp3Player.Android", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeMp3Player.iOS", "YouTubeMp3Player.iOS\YouTubeMp3Player.iOS.csproj", "{8E537656-5A64-41D0-AA2B-10E8EC75472F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeMp3Player", "YouTubeMp3Player\YouTubeMp3Player.csproj", "{ACD0D129-7EAA-477D-BE21-67B2DC755C95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTubeMp3Player", "YouTubeMp3Player\YouTubeMp3Player.csproj", "{ACD0D129-7EAA-477D-BE21-67B2DC755C95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
