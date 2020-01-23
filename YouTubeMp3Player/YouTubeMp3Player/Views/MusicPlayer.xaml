@@ -47,7 +47,8 @@
                    Source="track_ico.png"/>
 
             <!-- Track info -->
-            <Label HorizontalTextAlignment="Center"
+            <Label x:Name="TrackInfo"
+                   HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    FontSize="Medium"
                    Grid.Row="6"

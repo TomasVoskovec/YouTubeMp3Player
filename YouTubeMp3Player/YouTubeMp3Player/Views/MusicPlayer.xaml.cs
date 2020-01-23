@@ -18,6 +18,7 @@ namespace YouTubeMp3Player.Views
     public partial class MusicPlayer : ContentPage
     {
         Timer timer = new Timer(10);
+        List<Track> tracks = new List<Track>();
 
         bool seeking = false;
 
@@ -31,7 +32,11 @@ namespace YouTubeMp3Player.Views
         {
             timer.Elapsed += new ElapsedEventHandler(TimerHandler);
 
-            playSomeShit();
+            CrossMediaManager.Current.StateChanged += new MediaManager.Playback.StateChangedEventHandler(MediaChangedEventHandler);
+
+            loadMusic();
+
+            initPlaylist();
 
             AudioSlider.MinimumTrackColor = Constants.ActiveOrangeColor;
             AudioSlider.MaximumTrackColor = Constants.PasiveColor;
@@ -41,24 +46,43 @@ namespace YouTubeMp3Player.Views
             AddToPlaylistIco.TintColor = Constants.PasiveColor;
         }
 
+        void loadMusic()
+        {
+            IRoseMediaManager manager = DependencyService.Get<IRoseMediaManager>();
+
+            tracks = manager.GetTracks();
+        }
+
         void TimerHandler(object source, ElapsedEventArgs e)
         {
             updateSlider(CrossMediaManager.Current.Position);
         }
 
-        void playSomeShit()
+        void MediaChangedEventHandler(object sender, MediaManager.Playback.StateChangedEventArgs e)
         {
-            trackInit("test.mp3");
+            trackInit();
         }
 
-        async void trackInit(string fileName)
+        async void initPlaylist()
         {
+            List<string> tracksUris = new List<string>();
+            foreach (Track track in tracks)
+            {
+                tracksUris.Add(track.Uri);
+            }
+            var mediaManager = await CrossMediaManager.Current.Play(tracksUris);
 
-            var mediaManager = await CrossMediaManager.Current.PlayFromResource("assets:///test.mp3");
+            trackInit();
 
             //timer.Start();
+        }
 
-            //initSlider(mediaManager.Duration);
+        void trackInit()
+        {
+            // Slider functions
+
+            // FrontEnd
+            TrackInfo.Text = CrossMediaManager.Current.Queue.Title;
         }
 
         void initSlider(TimeSpan duration)
