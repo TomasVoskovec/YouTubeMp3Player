@@ -29,9 +29,11 @@ namespace YouTubeMp3Player.Droid
                 string name = c.GetString(c.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.DisplayName));
                 string uri = c.GetString(c.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Data));
 
-                Track track = new Track(name, uri);
-                music.Add(track);
-
+                if (uri.Contains(".mp3"))
+                {
+                    Track track = new Track(name, uri);
+                    music.Add(track);
+                }
             }
 
             return music;

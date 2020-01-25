@@ -70,11 +70,15 @@ namespace YouTubeMp3Player.Views
             {
                 tracksUris.Add(track.Uri);
             }
-            var mediaManager = await CrossMediaManager.Current.Play(tracksUris);
 
-            trackInit();
+            if(tracksUris.Count > 0)
+            {
+                var mediaManager = await CrossMediaManager.Current.Play(tracksUris[0]);
 
-            //timer.Start();
+                trackInit();
+
+                //timer.Start();
+            }
         }
 
         void trackInit()
@@ -82,7 +86,7 @@ namespace YouTubeMp3Player.Views
             // Slider functions
 
             // FrontEnd
-            TrackInfo.Text = CrossMediaManager.Current.Queue.Title;
+            TrackInfo.Text = CrossMediaManager.Current.Queue.Current.DisplayTitle;
         }
 
         void initSlider(TimeSpan duration)

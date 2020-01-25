@@ -14,5 +14,10 @@ namespace YouTubeMp3Player.Models
             this.Name = name;
             this.Uri = uri;
         }
+
+        public Track()
+        {
+
+        }
     }
 }
