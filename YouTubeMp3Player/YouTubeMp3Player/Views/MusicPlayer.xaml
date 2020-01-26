@@ -47,7 +47,7 @@
                    Source="track_ico.png"/>
 
             <!-- Track info -->
-            <Label x:Name="TrackInfo"
+            <Label x:Name="TrackTitle"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    FontSize="Medium"
@@ -90,7 +90,12 @@
                     BackgroundColor="Transparent"/>
 
             <!-- Track slider -->
+            <Slider x:Name="CurrentTrackTime"
+                    Grid.Row="8"
+                    Grid.ColumnSpan="3"
+                    ThumbImageSource="slider_thumb.png"/>
             <Slider x:Name="AudioSlider"
+                    Opacity="0"
                     ValueChanged="AudioSlider_ValueChanged"
                     Grid.Row="8"
                     Grid.ColumnSpan="3"
@@ -104,7 +109,8 @@
                     Grid.Column="0"
                     BackgroundColor="Transparent"/>
 
-            <Image Grid.Row="9"
+            <Image x:Name="PlayButtonImage"
+                   Grid.Row="9"
                    Grid.RowSpan="2"
                    Grid.Column="1"
                    Source="play_ico.png"/>

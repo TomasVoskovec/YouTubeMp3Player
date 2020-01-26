@@ -11666,29 +11666,32 @@ namespace YouTubeMp3Player.Droid
 			// aapt resource value: 0x7F07015C
 			public const int notify_panel_notification_icon_bg = 2131165532;
 			
-			// aapt resource value: 0x7F07015E
-			public const int player_ico = 2131165534;
-			
 			// aapt resource value: 0x7F07015D
-			public const int play_ico = 2131165533;
+			public const int pause_ico = 2131165533;
 			
 			// aapt resource value: 0x7F07015F
-			public const int prev_ico = 2131165535;
+			public const int player_ico = 2131165535;
+			
+			// aapt resource value: 0x7F07015E
+			public const int play_ico = 2131165534;
 			
 			// aapt resource value: 0x7F070160
-			public const int repeat_ico = 2131165536;
+			public const int prev_ico = 2131165536;
 			
 			// aapt resource value: 0x7F070161
-			public const int slider_thumb = 2131165537;
+			public const int repeat_ico = 2131165537;
 			
 			// aapt resource value: 0x7F070162
-			public const int tooltip_frame_dark = 2131165538;
+			public const int slider_thumb = 2131165538;
 			
 			// aapt resource value: 0x7F070163
-			public const int tooltip_frame_light = 2131165539;
+			public const int tooltip_frame_dark = 2131165539;
 			
 			// aapt resource value: 0x7F070164
-			public const int track_ico = 2131165540;
+			public const int tooltip_frame_light = 2131165540;
+			
+			// aapt resource value: 0x7F070165
+			public const int track_ico = 2131165541;
 			
 			static Drawable()
 			{

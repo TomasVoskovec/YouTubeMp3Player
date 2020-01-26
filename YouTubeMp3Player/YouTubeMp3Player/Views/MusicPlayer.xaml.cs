@@ -20,8 +20,6 @@ namespace YouTubeMp3Player.Views
         Timer timer = new Timer(10);
         List<Track> tracks = new List<Track>();
 
-        bool seeking = false;
-
         public MusicPlayer()
         {
             InitializeComponent();
@@ -37,6 +35,9 @@ namespace YouTubeMp3Player.Views
             loadMusic();
 
             initPlaylist();
+
+            CurrentTrackTime.MinimumTrackColor = Constants.ActiveOrangeColor;
+            CurrentTrackTime.MaximumTrackColor = Constants.PasiveColor;
 
             AudioSlider.MinimumTrackColor = Constants.ActiveOrangeColor;
             AudioSlider.MaximumTrackColor = Constants.PasiveColor;
@@ -55,12 +56,23 @@ namespace YouTubeMp3Player.Views
 
         void TimerHandler(object source, ElapsedEventArgs e)
         {
+            CurrentTrackTime.Opacity = 1;
+            AudioSlider.Opacity = 0;
             updateSlider(CrossMediaManager.Current.Position);
         }
 
         void MediaChangedEventHandler(object sender, MediaManager.Playback.StateChangedEventArgs e)
         {
             trackInit();
+
+            if (CrossMediaManager.Current.IsPlaying())
+            {
+                PlayButtonImage.Source = "play_ico.png";
+            }
+            else
+            {
+                PlayButtonImage.Source = "pause_ico.png";
+            }
         }
 
         async void initPlaylist()
@@ -77,32 +89,39 @@ namespace YouTubeMp3Player.Views
 
                 trackInit();
 
-                //timer.Start();
+                timer.Start();
             }
         }
 
         void trackInit()
         {
             // Slider functions
-
+            initSlider(CrossMediaManager.Current.Queue.Current.Duration);
             // FrontEnd
-            TrackInfo.Text = CrossMediaManager.Current.Queue.Current.DisplayTitle;
+            TrackTitle.Text = prepTrackTitle(CrossMediaManager.Current.Queue.Current.DisplayTitle);
+        }
+
+        string prepTrackTitle(string name)
+        {
+            if (name.Length > 50)
+            {
+                return name.Substring(0, 50) + "...";
+            }
+            return name;
         }
 
         void initSlider(TimeSpan duration)
         {
             int seconds = (int)duration.TotalSeconds;
             AudioSlider.Maximum = seconds;
+            CurrentTrackTime.Maximum = seconds;
         }
 
         void updateSlider(TimeSpan possition)
         {
             int seconds = (int)possition.TotalSeconds;
 
-            if (seconds > 0 && !seeking)
-            {
-                AudioSlider.Value = seconds;
-            }
+            CurrentTrackTime.Value = seconds;
         }
 
         void activateIcon(TintedImage icon)
@@ -137,14 +156,15 @@ namespace YouTubeMp3Player.Views
             CrossMediaManager.Current.PlayPause();
         }
 
-        private void AudioSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+        private async void AudioSlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            /*seeking = true;
+            AudioSlider.Opacity = 1;
+            CurrentTrackTime.Opacity = 0;
 
-            TimeSpan time = new TimeSpan(0, 0, (int)AudioSlider.Value);
-            CrossMediaManager.Current.SeekTo(time);
+            int changedTimeNum = (int)AudioSlider.Value;
+            TimeSpan changedTime = new TimeSpan(0, 0, changedTimeNum);
 
-            seeking = false;*/
+            await CrossMediaManager.Current.SeekTo(changedTime);
         }
     }
 }
