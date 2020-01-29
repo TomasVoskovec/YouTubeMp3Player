@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Resources;
 using System.Threading;
 using Xamarin.Essentials;
@@ -22,11 +23,14 @@ namespace YouTubeMp3Player
         static bool hasInternet;
         static bool noInternetShow;
 
+        public static Track AddToPlaylistTrack;
+        public static List<Playlist> Playlists;
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new InitPage();
         }
 
         protected override void OnStart()

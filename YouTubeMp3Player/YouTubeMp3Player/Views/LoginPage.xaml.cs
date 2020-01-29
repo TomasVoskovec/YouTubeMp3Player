@@ -75,22 +75,7 @@ namespace YouTubeMp3Player.Views
 
                         if (serverUser.Id != 0)
                         {
-                            if (Device.RuntimePlatform == Device.Android)
-                            {
-                                Application.Current.MainPage = new NavigationPage(new MainPage())
-                                {
-                                    BarBackgroundColor = Color.White,
-                                    BarTextColor = Color.Black,
-                                };
-                            }
-                            if (Device.RuntimePlatform == Device.iOS)
-                            {
-                                await Navigation.PushModalAsync(new NavigationPage(new MainPage())
-                                {
-                                    BarBackgroundColor = Color.White,
-                                    BarTextColor = Color.Black,
-                                });
-                            }
+                            await Navigation.PushModalAsync(new NavigationPage(new MainPage()));
                         }
                         else
                         {
@@ -126,21 +111,14 @@ namespace YouTubeMp3Player.Views
                     try
                     {
                         serverUser = await App.RestService.ValidateToken(token);
-                    }
-                    catch (Exception)
-                    {
-                    }
 
-                    if (serverUser.Id != 0)
-                    {
-                        if (Device.RuntimePlatform == Device.Android)
-                        {
-                            Application.Current.MainPage = new NavigationPage(new MainPage());
-                        }
-                        if (Device.RuntimePlatform == Device.iOS)
+                        if (serverUser.Id != 0)
                         {
                             await Navigation.PushModalAsync(new NavigationPage(new MainPage()));
                         }
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
             }
