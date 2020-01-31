@@ -151,7 +151,7 @@ namespace YouTubeMp3Player.Views
             string trackUri = CrossMediaManager.Current.Queue.Current.MediaUri;
             App.AddToPlaylistTrack = tracks.Find(x => x.Uri == trackUri);
 
-            Navigation.PushAsync(new AddToPlaylistPage());
+            Navigation.PushModalAsync(new AddToPlaylistPage());
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)

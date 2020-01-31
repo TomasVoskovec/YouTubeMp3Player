@@ -15,6 +15,7 @@ namespace YouTubeMp3Player
     {
         static TokenDatabase tokenDatabase;
         static UserDatabase userDatabase;
+        static PlaylistDatabase playlistDatabase;
         static RestService restService;
         static Label labelScreen;
         static Page currentPage;
@@ -24,18 +25,22 @@ namespace YouTubeMp3Player
         static bool noInternetShow;
 
         public static Track AddToPlaylistTrack;
-        public static List<Playlist> Playlists;
+        public static List<Playlist> Playlists = new List<Playlist>();
 
         public App()
         {
             InitializeComponent();
 
-            MainPage = new InitPage();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()
         {
             // Handle when your app starts
+            if (PlaylistDatabase.GetAllPlaylists() != null)
+            {
+                Playlists = PlaylistDatabase.GetAllPlaylists();
+            }
         }
 
         protected override void OnSleep()
@@ -69,6 +74,18 @@ namespace YouTubeMp3Player
                     tokenDatabase = new TokenDatabase();
                 }
                 return tokenDatabase;
+            }
+        }
+
+        public static PlaylistDatabase PlaylistDatabase
+        {
+            get
+            {
+                if (playlistDatabase == null)
+                {
+                    playlistDatabase = new PlaylistDatabase();
+                }
+                return playlistDatabase;
             }
         }
 

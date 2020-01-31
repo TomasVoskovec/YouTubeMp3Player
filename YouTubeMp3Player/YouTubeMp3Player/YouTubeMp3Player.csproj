@@ -15,6 +15,8 @@
     <PackageReference Include="Plugin.MediaManager.Forms" Version="0.9.1" />
     <PackageReference Include="ShapeControl.Forms" Version="0.2.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
+    <PackageReference Include="SQLite.Net-PCL" Version="3.1.1" />
+    <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
     <PackageReference Include="ThriveGmbH.BottomNavigationBar.XF" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
@@ -23,9 +25,6 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Views\AddToPlaylistPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\InitPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LoginPage.xaml">

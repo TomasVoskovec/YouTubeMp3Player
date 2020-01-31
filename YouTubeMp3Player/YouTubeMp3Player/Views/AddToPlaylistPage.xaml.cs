@@ -17,6 +17,8 @@ namespace YouTubeMp3Player.Views
         List<Playlist> playlists = App.Playlists;
         Dictionary<Button, Playlist> playlistButtons = new Dictionary<Button, Playlist>();
 
+        Track addToPlaylistTrack = App.AddToPlaylistTrack;
+
         public AddToPlaylistPage()
         {
             InitializeComponent();
@@ -28,18 +30,38 @@ namespace YouTubeMp3Player.Views
             updatePlaylists();
         }
 
+        void deleteAllPlaylists()
+        {
+            foreach (Playlist playlist in playlists)
+            {
+                App.PlaylistDatabase.DeletePlaylist(playlist.Id);
+            }
+
+            App.Playlists = new List<Playlist>();
+            playlists = App.Playlists;
+        }
+
         void updatePlaylists()
         {
-            if (playlists.Count != 0)
+            PlaylistsScroll.Children.Clear();
+            if(playlists != null)
             {
-                foreach (Playlist playlist in playlists)
+                if (playlists.Count != 0)
                 {
-                    Button playlistButton = new Button();
-                    playlistButton.Text = playlist.Name;
-                    playlistButton.Clicked += Playlist_Clicked;
+                    foreach (Playlist playlist in playlists)
+                    {
+                        Button playlistButton = new Button();
+                        playlistButton.Text = playlist.Name;
+                        playlistButton.Clicked += Playlist_Clicked;
+                        if (playlist.Tracks.Contains(addToPlaylistTrack))
+                        {
+                            playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
+                            playlistButton.TextColor = Constants.ButtonTextColor;
+                        }
 
-                    PlaylistsScroll.Children.Add(playlistButton);
-                    playlistButtons.Add(playlistButton, playlist);
+                        PlaylistsScroll.Children.Add(playlistButton);
+                        playlistButtons.Add(playlistButton, playlist);
+                    }
                 }
             }
         }
@@ -49,21 +71,32 @@ namespace YouTubeMp3Player.Views
             if (sender is Button)
             {
                 Playlist playlist = playlistButtons[(Button)sender];
-                playlist.Tracks.Add(App.AddToPlaylistTrack);
+                if(playlist.Tracks.Contains(addToPlaylistTrack))
+                {
+                    playlist.Tracks.Remove(addToPlaylistTrack);
+                }
+                else
+                {
+                    playlist.Tracks.Add(addToPlaylistTrack);
+                }
 
                 App.Playlists = playlists;
+                App.PlaylistDatabase.SavePlaylist(playlist);
             }
+
+            updatePlaylists();
         }
 
         private void AddNewPlaylist_Clicked(object sender, EventArgs e)
         {
             if (NewPlaylistName.Text != "")
             {
-                Playlist newPlaylist = new Playlist(NewPlaylistName.Text);
+                Playlist newPlaylist = new Playlist(NewPlaylistName.Text, new List<Track>{addToPlaylistTrack});
                 playlists.Add(newPlaylist);
                 updatePlaylists();
 
                 App.Playlists = playlists;
+                App.PlaylistDatabase.SavePlaylist(newPlaylist);
             }
         }
     }
