@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace YouTubeMp3Player.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
-        [SQLiteNetExtensions.Attributes.TextBlob("TracksBlobbed")]
+        [TextBlob("TracksBlobbed")]
         public List<Track> Tracks { get; set; }
         public string TracksBlobbed { get; set; }
 

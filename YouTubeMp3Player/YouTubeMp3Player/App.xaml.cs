@@ -25,7 +25,6 @@ namespace YouTubeMp3Player
         static bool noInternetShow;
 
         public static Track AddToPlaylistTrack;
-        public static List<Playlist> Playlists = new List<Playlist>();
 
         public App()
         {
@@ -37,10 +36,6 @@ namespace YouTubeMp3Player
         protected override void OnStart()
         {
             // Handle when your app starts
-            if (PlaylistDatabase.GetAllPlaylists() != null)
-            {
-                Playlists = PlaylistDatabase.GetAllPlaylists();
-            }
         }
 
         protected override void OnSleep()

@@ -46,5 +46,10 @@ namespace YouTubeMp3Player.Data
         {
             return database.Delete<Playlist>(id);
         }
+
+        public void DeleteAllPlaylists()
+        {
+            database.DeleteAll<Playlist>();
+        }
     }
 }

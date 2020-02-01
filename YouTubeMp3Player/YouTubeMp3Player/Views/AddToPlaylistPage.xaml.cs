@@ -14,7 +14,7 @@ namespace YouTubeMp3Player.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddToPlaylistPage : ContentPage
     {
-        List<Playlist> playlists = App.Playlists;
+        List<Playlist> playlists = App.PlaylistDatabase.GetAllPlaylists();
         Dictionary<Button, Playlist> playlistButtons = new Dictionary<Button, Playlist>();
 
         Track addToPlaylistTrack = App.AddToPlaylistTrack;
@@ -27,18 +27,23 @@ namespace YouTubeMp3Player.Views
 
         void init()
         {
+            deleteAllPlaylists();
+            playlistTest();
+
+            playlists = App.PlaylistDatabase.GetAllPlaylists();
+
             updatePlaylists();
+        }
+
+        void playlistTest()
+        {
+            App.PlaylistDatabase.SavePlaylist(new Playlist("playlistTest", new List<Track> { addToPlaylistTrack }));
         }
 
         void deleteAllPlaylists()
         {
-            foreach (Playlist playlist in playlists)
-            {
-                App.PlaylistDatabase.DeletePlaylist(playlist.Id);
-            }
-
-            App.Playlists = new List<Playlist>();
-            playlists = App.Playlists;
+            App.PlaylistDatabase.DeleteAllPlaylists();
+            playlists = null;
         }
 
         void updatePlaylists()
@@ -53,10 +58,13 @@ namespace YouTubeMp3Player.Views
                         Button playlistButton = new Button();
                         playlistButton.Text = playlist.Name;
                         playlistButton.Clicked += Playlist_Clicked;
-                        if (playlist.Tracks.Contains(addToPlaylistTrack))
+                        if (playlist.Tracks != null)
                         {
-                            playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
-                            playlistButton.TextColor = Constants.ButtonTextColor;
+                            if (playlist.Tracks.Contains(addToPlaylistTrack))
+                            {
+                                playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
+                                playlistButton.TextColor = Constants.ButtonTextColor;
+                            }
                         }
 
                         PlaylistsScroll.Children.Add(playlistButton);
@@ -80,7 +88,6 @@ namespace YouTubeMp3Player.Views
                     playlist.Tracks.Add(addToPlaylistTrack);
                 }
 
-                App.Playlists = playlists;
                 App.PlaylistDatabase.SavePlaylist(playlist);
             }
 
@@ -95,7 +102,6 @@ namespace YouTubeMp3Player.Views
                 playlists.Add(newPlaylist);
                 updatePlaylists();
 
-                App.Playlists = playlists;
                 App.PlaylistDatabase.SavePlaylist(newPlaylist);
             }
         }

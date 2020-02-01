@@ -154,9 +154,9 @@ namespace YouTubeMp3Player.Views
             Navigation.PushModalAsync(new AddToPlaylistPage());
         }
 
-        private void PlayButton_Clicked(object sender, EventArgs e)
+        private async void PlayButton_Clicked(object sender, EventArgs e)
         {
-            CrossMediaManager.Current.PlayPause();
+            await CrossMediaManager.Current.PlayPause();
         }
 
         private async void AudioSlider_ValueChanged(object sender, ValueChangedEventArgs e)
