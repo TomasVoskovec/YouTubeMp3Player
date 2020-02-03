@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +28,8 @@ namespace YouTubeMp3Player.Views
 
         void init()
         {
-            deleteAllPlaylists();
-            playlistTest();
+            //deleteAllPlaylists();
+            //playlistTest();
 
             playlists = App.PlaylistDatabase.GetAllPlaylists();
 
@@ -58,12 +59,16 @@ namespace YouTubeMp3Player.Views
                         Button playlistButton = new Button();
                         playlistButton.Text = playlist.Name;
                         playlistButton.Clicked += Playlist_Clicked;
-                        if (playlist.Tracks != null)
+                        if (playlist.TracksSerialized != null)
                         {
-                            if (playlist.Tracks.Contains(addToPlaylistTrack))
+                            List<Track> tracks = JsonConvert.DeserializeObject<List<Track>>(playlist.TracksSerialized);
+                            if (tracks != null && tracks.Count != 0)
                             {
-                                playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
-                                playlistButton.TextColor = Constants.ButtonTextColor;
+                                if (tracks.Find(x => x.Uri == addToPlaylistTrack.Uri) != null)
+                                {
+                                    playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
+                                    playlistButton.TextColor = Constants.ButtonTextColor;
+                                }
                             }
                         }
 
@@ -79,14 +84,20 @@ namespace YouTubeMp3Player.Views
             if (sender is Button)
             {
                 Playlist playlist = playlistButtons[(Button)sender];
-                if(playlist.Tracks.Contains(addToPlaylistTrack))
+                List<Track> tracks = JsonConvert.DeserializeObject<List<Track>>(playlist.TracksSerialized);
+
+                Track findTrack = tracks.Find(x => x.Uri == addToPlaylistTrack.Uri);
+
+                if (findTrack != null)
                 {
-                    playlist.Tracks.Remove(addToPlaylistTrack);
+                    tracks.Remove(findTrack);
                 }
                 else
                 {
-                    playlist.Tracks.Add(addToPlaylistTrack);
+                    tracks.Add(addToPlaylistTrack);
                 }
+
+                playlist.TracksSerialized = JsonConvert.SerializeObject(tracks);
 
                 App.PlaylistDatabase.SavePlaylist(playlist);
             }

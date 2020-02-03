@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 using YouTubeMp3Player.Models;
+using Newtonsoft.Json;
 
 namespace YouTubeMp3Player.Data
 {
@@ -50,6 +51,64 @@ namespace YouTubeMp3Player.Data
         public void DeleteAllPlaylists()
         {
             database.DeleteAll<Playlist>();
+        }
+
+        public void AddToFavourites(Track track)
+        {
+            Playlist favourites = GetFavourites();
+
+            favourites.AddTrack(track);
+            database.Update(favourites);
+        }
+
+        public Playlist GetFavourites()
+        {
+            Playlist favourites = database.Table<Playlist>().ToList().Find(x => x.Name == "Favourites");
+
+            if (favourites == null)
+            {
+                favourites = new Playlist("Favourites");
+                database.Insert(favourites);
+            }
+
+            return favourites;
+        }
+
+        public void DeleteFromFavourites(Track track)
+        {
+            if (IsFavourite(track))
+            {
+                Playlist fav = GetFavourites();
+                List<Track> favTracks = fav.GetTracks();
+                Track findTrack = favTracks.Find(x => x.Uri == track.Uri);
+                fav.DeleteTrack(track);
+                
+                database.Update(fav);
+            }
+        }
+
+        public bool IsFavourite (Track track)
+        {
+            if (track != null)
+            {
+                Playlist fav = GetFavourites();
+
+                if (fav != null)
+                {
+                    List<Track> favTracks = fav.GetTracks();
+                    if (fav.TracksSerialized == null || favTracks.Find(x => x.Uri == track.Uri) == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            return false;
         }
     }
 }

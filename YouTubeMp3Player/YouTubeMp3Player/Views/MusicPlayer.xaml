@@ -105,7 +105,9 @@
             <Image Grid.Row="10"
                    Grid.Column="0"
                    Source="prev_ico.png"/>
-            <Button Grid.Row="10"
+            <Button x:Name="PlayPrev"
+                    Clicked="PlayPrev_Clicked"
+                    Grid.Row="10"
                     Grid.Column="0"
                     BackgroundColor="Transparent"/>
 
@@ -124,7 +126,9 @@
             <Image Grid.Row="10"
                    Grid.Column="2"
                    Source="next_ico.png"/>
-            <Button Grid.Row="10"
+            <Button x:Name="PlayNext"
+                    Clicked="PlayNext_Clicked"
+                    Grid.Row="10"
                     Grid.Column="2"
                     BackgroundColor="Transparent"/>
         </Grid>
