@@ -38,7 +38,7 @@
                    FontSize="Medium"
                    Grid.Row="0"
                    Grid.ColumnSpan="3"
-                   Text="Music from playlist Playlist name"/>
+                   Text=""/>
 
             <!-- Track image -->
             <Image Grid.Row="1"
@@ -53,7 +53,7 @@
                    FontSize="Medium"
                    Grid.Row="6"
                    Grid.ColumnSpan="3"
-                   Text="Generator - Lorem Ipsum"/>
+                   Text=""/>
 
             <!-- Track action buttons -->
             <controls:TintedImage x:Name="AddToPlaylistIco"
@@ -96,6 +96,8 @@
                     ThumbImageSource="slider_thumb.png"/>
             <Slider x:Name="AudioSlider"
                     Opacity="0"
+                    DragStarted="AudioSlider_DragStarted"
+                    DragCompleted="AudioSlider_DragCompleted"
                     ValueChanged="AudioSlider_ValueChanged"
                     Grid.Row="8"
                     Grid.ColumnSpan="3"

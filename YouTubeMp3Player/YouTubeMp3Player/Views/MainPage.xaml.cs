@@ -1,5 +1,4 @@
-﻿using BottomBar.XamarinForms;
-using MediaManager.Library;
+﻿using MediaManager.Library;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ using YouTubeMp3Player.Models;
 namespace YouTubeMp3Player.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : BottomBarPage
+    public partial class MainPage : TabbedPage
     {
         public MainPage()
         {
@@ -30,7 +29,8 @@ namespace YouTubeMp3Player.Views
             NavigationPage.SetHasNavigationBar(this, false);
 
             // Initialize pages
-            this.Children.Add(new MusicPlayer() { IconImageSource = "player_ico.png" });
+            this.Children.Add(new MusicPlayer() { Title = "Music Player", IconImageSource = "player_ico.png" });
+            this.Children.Add(new PlaylistsPage() { Title = "Playlists", IconImageSource = "playlist_ico.png" });
         }
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "YouTubeMp3Player": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

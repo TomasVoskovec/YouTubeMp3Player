@@ -58,8 +58,6 @@ namespace YouTubeMp3Player.Views
 
         void TimerHandler(object source, ElapsedEventArgs e)
         {
-            CurrentTrackTime.Opacity = 1;
-            AudioSlider.Opacity = 0;
             updateSlider(CrossMediaManager.Current.Position);
         }
 
@@ -69,11 +67,11 @@ namespace YouTubeMp3Player.Views
 
             if (CrossMediaManager.Current.IsPlaying())
             {
-                PlayButtonImage.Source = "play_ico.png";
+                PlayButtonImage.Source = "pause_ico.png";
             }
             else
             {
-                PlayButtonImage.Source = "pause_ico.png";
+                PlayButtonImage.Source = "play_ico.png";
             }
         }
 
@@ -89,15 +87,21 @@ namespace YouTubeMp3Player.Views
             }
         }
 
+        /*void downloadFromYouTube(string url)
+        {
+            var youTube = YouTube.Default; // starting point for YouTube actions
+            var video = youTube.GetVideo(url); // gets a Video object with info about the video
+        }*/
+
         async void initPlaylist()
         {
-            List<string> tracksUris = new List<string>(); /*{ 
+            List<string> tracksUris = new List<string>(){ 
                 "https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3",
                 "https://ia800605.us.archive.org/32/items/Mp3Playlist_555/CelineDion-IfICould.mp3",
                 "https://ia800605.us.archive.org/32/items/Mp3Playlist_555/Daughtry-Homeacoustic.mp3",
                 "https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/01_-_Intro_-_The_Way_Of_Waking_Up_feat_Alan_Watts.mp3",
                 "https://aphid.fireside.fm/d/1437767933/02d84890-e58d-43eb-ab4c-26bcc8524289/d9b38b7f-5ede-4ca7-a5d6-a18d5605aba1.mp3"
-            };*/
+            };
 
             foreach (Track track in tracks)
             {
@@ -128,9 +132,18 @@ namespace YouTubeMp3Player.Views
             initSlider(CrossMediaManager.Current.Queue.Current.Duration);
             // FrontEnd
             TrackTitle.Text = prepTrackTitle(CrossMediaManager.Current.Queue.Current.DisplayTitle);
+            isFavoriteAction();
+        }
+
+        void isFavoriteAction()
+        {
             if (App.PlaylistDatabase.IsFavourite(getCurrentTrack()))
             {
                 activateIcon(AddToFavouritesIco);
+            }
+            else
+            {
+                deactivateIcon(AddToFavouritesIco);
             }
         }
 
@@ -232,13 +245,22 @@ namespace YouTubeMp3Player.Views
 
         private async void AudioSlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            AudioSlider.Opacity = 1;
-            CurrentTrackTime.Opacity = 0;
-
             int changedTimeNum = (int)AudioSlider.Value;
             TimeSpan changedTime = new TimeSpan(0, 0, changedTimeNum);
 
             await CrossMediaManager.Current.SeekTo(changedTime);
+        }
+
+        private void AudioSlider_DragStarted(object sender, EventArgs e)
+        {
+            AudioSlider.Opacity = 1;
+            CurrentTrackTime.Opacity = 0;
+        }
+
+        private void AudioSlider_DragCompleted(object sender, EventArgs e)
+        {
+            AudioSlider.Opacity = 0;
+            CurrentTrackTime.Opacity = 1;
         }
 
         private async void PlayNext_Clicked(object sender, EventArgs e)
