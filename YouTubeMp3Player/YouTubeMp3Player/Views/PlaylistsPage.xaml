@@ -12,50 +12,60 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
             <FlexLayout>
                 <Frame WidthRequest="100"
-                   HeightRequest="175"
-                   HasShadow="False">
-
+                       HeightRequest="175"
+                       HasShadow="False">
                     <FlexLayout Direction="Column">
                         <Image Source="track_ico.png"
-                           Grid.Row="1"
-                           HeightRequest="100" />
+                               HeightRequest="100" />
                         <Label Text="Playlist name"
-                           WidthRequest="100"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center"/>
+                               WidthRequest="100"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
                     </FlexLayout>
                 </Frame>
-                <Frame WidthRequest="100"
-                   HeightRequest="175"
-                   HasShadow="False">
 
+                <Frame WidthRequest="100"
+                       HeightRequest="175"
+                       HasShadow="False"
+                       Grid.Column="1">
                     <FlexLayout Direction="Column">
                         <Image Source="track_ico.png"
-                           WidthRequest="100"
-                           HeightRequest="100" />
+                               HeightRequest="100" />
                         <Label Text="Playlist name"
-                           WidthRequest="100"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center"/>
+                               WidthRequest="100"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
                     </FlexLayout>
                 </Frame>
-                <Frame WidthRequest="100"
-                   HeightRequest="175"
-                   HasShadow="False">
 
+                <Frame WidthRequest="100"
+                       HeightRequest="175"
+                       HasShadow="False">
                     <FlexLayout Direction="Column">
                         <Image Source="track_ico.png"
-                           WidthRequest="100"
-                           HeightRequest="100" />
+                               HeightRequest="100" />
                         <Label Text="Playlist name"
-                           WidthRequest="100"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center"/>
+                               WidthRequest="100"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
+                    </FlexLayout>
+                </Frame>
+
+                <Frame WidthRequest="100"
+                       HeightRequest="175"
+                       HasShadow="False"
+                       Grid.Column="1">
+                    <FlexLayout Direction="Column">
+                        <Image Source="track_ico.png"
+                               HeightRequest="100" />
+                        <Label Text="Playlist name"
+                               WidthRequest="100"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
                     </FlexLayout>
                 </Frame>
             </FlexLayout>

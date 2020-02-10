@@ -96,11 +96,11 @@ namespace YouTubeMp3Player.Views
         async void initPlaylist()
         {
             List<string> tracksUris = new List<string>(){ 
-                "https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3",
+                "https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3"/*,
                 "https://ia800605.us.archive.org/32/items/Mp3Playlist_555/CelineDion-IfICould.mp3",
                 "https://ia800605.us.archive.org/32/items/Mp3Playlist_555/Daughtry-Homeacoustic.mp3",
                 "https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/01_-_Intro_-_The_Way_Of_Waking_Up_feat_Alan_Watts.mp3",
-                "https://aphid.fireside.fm/d/1437767933/02d84890-e58d-43eb-ab4c-26bcc8524289/d9b38b7f-5ede-4ca7-a5d6-a18d5605aba1.mp3"
+                "https://aphid.fireside.fm/d/1437767933/02d84890-e58d-43eb-ab4c-26bcc8524289/d9b38b7f-5ede-4ca7-a5d6-a18d5605aba1.mp3"*/
             };
 
             foreach (Track track in tracks)
@@ -201,22 +201,18 @@ namespace YouTubeMp3Player.Views
 
         private void AddToFavourites_Clicked(object sender, EventArgs e)
         {
-            Playlist favourites = App.PlaylistDatabase.GetFavourites();
-            List<Track> favouriteTracks = favourites.GetTracks();
-            string trackUri = CrossMediaManager.Current.Queue.Current.MediaUri;
-
-            if (favouriteTracks != null)
+            if (tracks != null || tracks.Count != 0)
             {
-                Track favouriteTrack = favouriteTracks.Find(x => x.Uri == trackUri);
-                Track currentTrack = tracks.Find(x => x.Uri == trackUri);
-                if (favouriteTrack == null)
+                Track track = tracks.Find(x => x.Uri == CrossMediaManager.Current.Queue.Current.MediaUri);
+
+                if (!App.PlaylistDatabase.IsFavourite(track))
                 {
-                    App.PlaylistDatabase.AddToFavourites(currentTrack);
+                    App.PlaylistDatabase.AddToFavourites(track);
                     activateIcon(AddToFavouritesIco);
                 }
                 else
                 {
-                    App.PlaylistDatabase.DeleteFromFavourites(favouriteTrack);
+                    App.PlaylistDatabase.DeleteFromFavourites(track);
                     deactivateIcon(AddToFavouritesIco);
                 }
             }

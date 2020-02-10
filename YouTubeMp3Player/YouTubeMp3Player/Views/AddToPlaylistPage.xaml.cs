@@ -64,10 +64,16 @@ namespace YouTubeMp3Player.Views
                             List<Track> tracks = JsonConvert.DeserializeObject<List<Track>>(playlist.TracksSerialized);
                             if (tracks != null && tracks.Count != 0)
                             {
-                                if (tracks.Find(x => x.Uri == addToPlaylistTrack.Uri) != null)
+                                foreach (Track track in tracks)
                                 {
-                                    playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
-                                    playlistButton.TextColor = Constants.ButtonTextColor;
+                                    if (track != null)
+                                    {
+                                        if (track.Uri == addToPlaylistTrack.Uri)
+                                        {
+                                            playlistButton.BackgroundColor = Constants.ActiveOrangeColor;
+                                            playlistButton.TextColor = Constants.ButtonTextColor;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -84,20 +90,16 @@ namespace YouTubeMp3Player.Views
             if (sender is Button)
             {
                 Playlist playlist = playlistButtons[(Button)sender];
-                List<Track> tracks = JsonConvert.DeserializeObject<List<Track>>(playlist.TracksSerialized);
+                List<Track> tracks = playlist.GetTracks();
 
-                Track findTrack = tracks.Find(x => x.Uri == addToPlaylistTrack.Uri);
-
-                if (findTrack != null)
+                if (playlist.ContainsTrack(addToPlaylistTrack))
                 {
-                    tracks.Remove(findTrack);
+                    playlist.DeleteTrack(addToPlaylistTrack);
                 }
                 else
                 {
-                    tracks.Add(addToPlaylistTrack);
+                    playlist.AddTrack(addToPlaylistTrack);
                 }
-
-                playlist.TracksSerialized = JsonConvert.SerializeObject(tracks);
 
                 App.PlaylistDatabase.SavePlaylist(playlist);
             }

@@ -5,6 +5,7 @@ using System.Text;
 using Xamarin.Forms;
 using YouTubeMp3Player.Models;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace YouTubeMp3Player.Data
 {
@@ -79,8 +80,6 @@ namespace YouTubeMp3Player.Data
             if (IsFavourite(track))
             {
                 Playlist fav = GetFavourites();
-                List<Track> favTracks = fav.GetTracks();
-                Track findTrack = favTracks.Find(x => x.Uri == track.Uri);
                 fav.DeleteTrack(track);
                 
                 database.Update(fav);
@@ -96,17 +95,21 @@ namespace YouTubeMp3Player.Data
                 if (fav != null)
                 {
                     List<Track> favTracks = fav.GetTracks();
-                    if (fav.TracksSerialized == null || favTracks.Find(x => x.Uri == track.Uri) == null)
+
+                    if (fav.TracksSerialized != null)
                     {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
+                        foreach (Track favTrack in favTracks)
+                        {
+                            if (favTrack != null)
+                            {
+                                if (favTrack.Uri == track.Uri)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
-
-                return false;
             }
             return false;
         }
