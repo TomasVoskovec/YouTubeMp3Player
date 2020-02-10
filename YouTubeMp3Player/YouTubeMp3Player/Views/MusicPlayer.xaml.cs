@@ -77,14 +77,7 @@ namespace YouTubeMp3Player.Views
 
         async void MediaItemFinished(object sender, MediaManager.Media.MediaItemEventArgs e)
         {
-            if (isLooping)
-            {
-                await CrossMediaManager.Current.PlayPrevious();
-            }
-            else
-            {
-                await CrossMediaManager.Current.PlayNext();
-            }
+            trackInit();
         }
 
         /*void downloadFromYouTube(string url)
@@ -191,10 +184,12 @@ namespace YouTubeMp3Player.Views
 
             if(isLooping)
             {
+                CrossMediaManager.Current.RepeatMode = MediaManager.Playback.RepeatMode.One;
                 activateIcon(RepeatIco);
             }
             else
             {
+                CrossMediaManager.Current.RepeatMode = MediaManager.Playback.RepeatMode.Off;
                 deactivateIcon(RepeatIco);
             }
         }
