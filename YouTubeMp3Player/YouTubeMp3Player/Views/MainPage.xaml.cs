@@ -28,7 +28,7 @@ namespace YouTubeMp3Player.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
 
-            // Initialize pages
+            // Initialize pages 
             this.Children.Add(new MusicPlayer() { Title = "Music Player", IconImageSource = "player_ico.png" });
             this.Children.Add(new PlaylistsPage() { Title = "Playlists", IconImageSource = "playlist_ico.png" });
         }
