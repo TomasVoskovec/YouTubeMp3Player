@@ -12,10 +12,10 @@ using Android.Views;
 using Android.Widget;
 using YouTubeMp3Player.Models;
 
-[assembly: Xamarin.Forms.Dependency(typeof(YouTubeMp3Player.Droid.RoseMediaManager))]
+[assembly: Xamarin.Forms.Dependency(typeof(YouTubeMp3Player.Droid.MediaHelper))]
 namespace YouTubeMp3Player.Droid
 {
-    class RoseMediaManager : IRoseMediaManager
+    class MediaHelper : IRoseMediaManager
     {
         public List<Track> GetTracks()
         {

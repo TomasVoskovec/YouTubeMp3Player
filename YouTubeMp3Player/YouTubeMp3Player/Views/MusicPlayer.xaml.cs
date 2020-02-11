@@ -3,11 +3,8 @@ using Plugin.CrossPlatformTintedImage.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using VideoLibrary;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using YouTubeMp3Player.Models;
@@ -75,16 +72,15 @@ namespace YouTubeMp3Player.Views
             }
         }
 
-        async void MediaItemFinished(object sender, MediaManager.Media.MediaItemEventArgs e)
+        void MediaItemFinished(object sender, MediaManager.Media.MediaItemEventArgs e)
         {
             trackInit();
         }
 
-        /*void downloadFromYouTube(string url)
+        void downloadFromYouTube(string url)
         {
-            var youTube = YouTube.Default; // starting point for YouTube actions
-            var video = youTube.GetVideo(url); // gets a Video object with info about the video
-        }*/
+            
+        }
 
         async void initPlaylist()
         {
