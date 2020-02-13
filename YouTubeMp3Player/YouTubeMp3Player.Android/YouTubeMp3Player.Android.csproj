@@ -91,7 +91,6 @@
     <Compile Include="Data\NetworkConnection.cs" />
     <Compile Include="Data\SQLiteAndroid.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Models\MediaHelper.cs" />
     <Compile Include="Models\RoseMediaManager.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

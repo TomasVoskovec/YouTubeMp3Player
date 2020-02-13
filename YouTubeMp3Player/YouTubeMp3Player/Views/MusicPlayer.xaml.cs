@@ -25,16 +25,28 @@ namespace YouTubeMp3Player.Views
             init();
         }
 
-        void init()
+        public MusicPlayer(Track currentTrack, Playlist playlist)
+        {
+            InitializeComponent();
+            init(currentTrack, playlist);
+        }
+
+        void init(Track track = null, Playlist playlist = null)
         {
             timer.Elapsed += new ElapsedEventHandler(TimerHandler);
 
             CrossMediaManager.Current.StateChanged += new MediaManager.Playback.StateChangedEventHandler(MediaChangedEventHandler);
             CrossMediaManager.Current.MediaItemFinished += new MediaManager.Playback.MediaItemFinishedEventHandler(MediaItemFinished);
 
-            loadMusic();
-
-            initPlaylist();
+            if (track == null || playlist == null)
+            {
+                loadMusic();
+                initPlaylist();
+            }
+            else
+            {
+                initPlaylist(track, playlist);
+            }
 
             CurrentTrackTime.MinimumTrackColor = Constants.ActiveOrangeColor;
             CurrentTrackTime.MaximumTrackColor = Constants.PasiveColor;
@@ -77,12 +89,7 @@ namespace YouTubeMp3Player.Views
             trackInit();
         }
 
-        void downloadFromYouTube(string url)
-        {
-            
-        }
-
-        async void initPlaylist()
+        async void initPlaylist(Track currentTrack = null, Playlist playlist = null)
         {
             List<string> tracksUris = new List<string>(){ 
                 "https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3"/*,
@@ -92,9 +99,21 @@ namespace YouTubeMp3Player.Views
                 "https://aphid.fireside.fm/d/1437767933/02d84890-e58d-43eb-ab4c-26bcc8524289/d9b38b7f-5ede-4ca7-a5d6-a18d5605aba1.mp3"*/
             };
 
-            foreach (Track track in tracks)
+            if (currentTrack == null || playlist == null)
             {
-                tracksUris.Add(track.Uri);
+                foreach (Track track in tracks)
+                {
+                    tracksUris.Add(track.Uri);
+                }
+            }
+            else
+            {
+                List<Track> playlistTracks = playlist.GetTracks();
+
+                foreach (Track track in playlistTracks)
+                {
+                    tracksUris.Add(track.Uri);
+                }
             }
 
             if(tracksUris.Count > 1)
@@ -109,9 +128,9 @@ namespace YouTubeMp3Player.Views
             {
                 await CrossMediaManager.Current.Play(tracksUris);
 
-                /*trackInit();
+                trackInit();
 
-                timer.Start();*/
+                timer.Start();
             }
         }
 
