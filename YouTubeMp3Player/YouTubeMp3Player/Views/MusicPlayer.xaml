@@ -33,7 +33,8 @@
             </Grid.Padding>
 
             <!-- Playlist info -->
-            <Label HorizontalTextAlignment="Center"
+            <Label x:Name="PlaylistName"
+                   HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    FontSize="Medium"
                    Grid.Row="0"

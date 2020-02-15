@@ -14,7 +14,7 @@ namespace YouTubeMp3Player.Views
     public partial class PlaylistPage : ContentPage
     {
         Playlist currentPlaylist;
-        Dictionary<Button, Track> tracksDictionary = new Dictionary<Button, Track>();
+        Dictionary<Frame, Track> tracksDictionary = new Dictionary<Frame, Track>();
 
         public PlaylistPage(Playlist playlist)
         {
@@ -30,32 +30,50 @@ namespace YouTubeMp3Player.Views
 
                 if (tracks != null && tracks.Count != 0)
                 {
+                    currentPlaylist = playlist;
+
                     foreach (Track track in tracks)
                     {
                         if (track != null)
                         {
-                            currentPlaylist = playlist;
+                            Image image = new Image() { Source = "track_ico.png", WidthRequest = 50, HeightRequest = 50 };
+                            Label label = new Label() { Text = prepTrackTitle(track.Name), VerticalTextAlignment = TextAlignment.Center, HeightRequest = 50, Margin = new Thickness(10, 0)};
 
-                            Button trackButton = new Button();
-                            trackButton.Text = track.Name;
-                            trackButton.Clicked += trackButtonClicked;
+                            FlexLayout flexLayout = new FlexLayout();
+                            flexLayout.Children.Add(image);
+                            flexLayout.Children.Add(label);
 
-                            tracksDictionary.Add(trackButton, track);
-                            TracksContainer.Children.Add(trackButton);
+                            TapGestureRecognizer gestureRecognizer = new TapGestureRecognizer();
+                            gestureRecognizer.Tapped += trackButtonClicked;
+
+                            Frame frame = new Frame() { HeightRequest = 50, Padding = 0, Content = flexLayout };
+                            frame.GestureRecognizers.Add(gestureRecognizer);
+
+                            tracksDictionary.Add(frame, track);
+                            TracksContainer.Children.Add(frame);
                         }
                     }
                 }
             }
         }
 
-        void trackButtonClicked(object sender, EventArgs args)
+        string prepTrackTitle(string name)
         {
-            if (sender is Button)
+            if (name.Length > 40)
             {
-                Button buttonKey = (Button)sender;
-                Track track = tracksDictionary[buttonKey];
+                return name.Substring(0, 40) + "...";
+            }
+            return name;
+        }
 
-                Navigation.PushModalAsync(new MusicPlayer(track, currentPlaylist));
+        async void trackButtonClicked(object sender, EventArgs args)
+        {
+            if (sender is Frame)
+            {
+                Frame key = (Frame)sender;
+                Track track = tracksDictionary[key];
+                
+                await Navigation.PushModalAsync(new NavigationPage(new MainPage(track, currentPlaylist)));
             }
         }
     }

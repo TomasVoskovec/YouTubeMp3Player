@@ -19,6 +19,12 @@ namespace YouTubeMp3Player.Views
         public PlaylistsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            playlists = App.PlaylistDatabase.GetAllPlaylists();
             init();
         }
 
@@ -26,6 +32,8 @@ namespace YouTubeMp3Player.Views
         {
             DisplayInfo mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             double width = mainDisplayInfo.Width / mainDisplayInfo.Density / 2;
+
+            PlaylistsContainer.Children.Clear();
 
             if (playlists != null && playlists.Count != 0)
             {

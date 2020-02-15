@@ -104,7 +104,7 @@ namespace YouTubeMp3Player.Views
 
             if (isConnected)
             {
-                if (token.AccessToken != null)
+                if (token != null && token.AccessToken != null)
                 {
                     User serverUser = null;
 
@@ -112,7 +112,7 @@ namespace YouTubeMp3Player.Views
                     {
                         serverUser = await App.RestService.ValidateToken(token);
 
-                        if (serverUser.Id != 0)
+                        if (serverUser != null && serverUser.Id != 0)
                         {
                             await Navigation.PushModalAsync(new NavigationPage(new MainPage()));
                         }
@@ -134,9 +134,9 @@ namespace YouTubeMp3Player.Views
             DisplayAlert("Password", "Haaahaaa", "OK");
         }
 
-        void RegisterLink_Clicked(object sender, EventArgs e)
+        async void RegisterLink_Clicked(object sender, EventArgs e)
         {
-            DisplayAlert("Register", "Register page", "OK");
+            await Navigation.PushModalAsync(new NavigationPage(new MainPage()));
         }
     }
 }

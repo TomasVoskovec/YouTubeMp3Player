@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0414: Pole MusicPlayer.initialized má přiřazenou hodnotu, ale nikdy se nepoužívá.
+dotnet_diagnostic.CS0414.severity = none

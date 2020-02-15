@@ -18,18 +18,18 @@ namespace YouTubeMp3Player.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : TabbedPage
     {
-        public MainPage()
+        public MainPage(Track track = null, Models.Playlist playlist = null)
         {
             InitializeComponent();
-            init();
+            init(track, playlist);
         }
 
-        void init()
+        void init(Track track = null, Models.Playlist playlist = null)
         {
             NavigationPage.SetHasNavigationBar(this, false);
 
             // Initialize pages 
-            this.Children.Add(new MusicPlayer() { Title = "Music Player", IconImageSource = "player_ico.png" });
+            this.Children.Add(new MusicPlayer(track, playlist) { Title = "Music Player", IconImageSource = "player_ico.png" });
             this.Children.Add(new PlaylistsPage() { Title = "Playlists", IconImageSource = "playlist_ico.png" });
         }
     }

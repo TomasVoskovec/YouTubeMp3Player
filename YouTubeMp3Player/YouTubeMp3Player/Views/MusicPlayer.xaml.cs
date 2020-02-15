@@ -17,7 +17,9 @@ namespace YouTubeMp3Player.Views
         Timer timer = new Timer(10);
         List<Track> tracks = new List<Track>();
 
+        string playlistName;
         bool isLooping = false;
+        bool isInitialized = false;
 
         public MusicPlayer()
         {
@@ -46,6 +48,7 @@ namespace YouTubeMp3Player.Views
             else
             {
                 initPlaylist(track, playlist);
+                playlistName = playlist.Name;
             }
 
             CurrentTrackTime.MinimumTrackColor = Constants.ActiveOrangeColor;
@@ -91,56 +94,50 @@ namespace YouTubeMp3Player.Views
 
         async void initPlaylist(Track currentTrack = null, Playlist playlist = null)
         {
-            List<string> tracksUris = new List<string>(){ 
-                "https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3"/*,
-                "https://ia800605.us.archive.org/32/items/Mp3Playlist_555/CelineDion-IfICould.mp3",
-                "https://ia800605.us.archive.org/32/items/Mp3Playlist_555/Daughtry-Homeacoustic.mp3",
-                "https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/01_-_Intro_-_The_Way_Of_Waking_Up_feat_Alan_Watts.mp3",
-                "https://aphid.fireside.fm/d/1437767933/02d84890-e58d-43eb-ab4c-26bcc8524289/d9b38b7f-5ede-4ca7-a5d6-a18d5605aba1.mp3"*/
-            };
+            List<string> tracksUris = new List<string>();
 
-            if (currentTrack == null || playlist == null)
+            if (currentTrack != null && playlist != null)
             {
-                foreach (Track track in tracks)
-                {
-                    tracksUris.Add(track.Uri);
-                }
-            }
-            else
-            {
-                List<Track> playlistTracks = playlist.GetTracks();
-
-                foreach (Track track in playlistTracks)
-                {
-                    tracksUris.Add(track.Uri);
-                }
+                tracks = playlist.GetTracks();
             }
 
-            if(tracksUris.Count > 1)
+            foreach (Track track in tracks)
             {
-                await CrossMediaManager.Current.Play(tracksUris);
-
-                trackInit();
-
-                timer.Start();
+                tracksUris.Add(track.Uri);
             }
-            else if(tracksUris.Count == 1)
+            
+            await CrossMediaManager.Current.Play("https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+            await CrossMediaManager.Current.Play(tracksUris);
+
+            if (currentTrack != null && playlist != null)
             {
-                await CrossMediaManager.Current.Play(tracksUris);
-
-                trackInit();
-
-                timer.Start();
+                int trackIndex = tracksUris.FindIndex(x => x == currentTrack.Uri);
+                CrossMediaManager.Current.Queue.Move(CrossMediaManager.Current.Queue.CurrentIndex, trackIndex);
             }
+
+            trackInit();
+            timer.Start();
         }
 
         void trackInit()
         {
             // Slider functions
             initSlider(CrossMediaManager.Current.Queue.Current.Duration);
+
             // FrontEnd
+            PlaylistName.Text = prepPlaylistInfo(playlistName);
             TrackTitle.Text = prepTrackTitle(CrossMediaManager.Current.Queue.Current.DisplayTitle);
             isFavoriteAction();
+            isInitialized = true;
+        }
+
+        string prepPlaylistInfo(string name = null)
+        {
+            if (name == null)
+            {
+                return "";
+            }
+            return "Hudba z playlistu \"" + name + "\"";
         }
 
         void isFavoriteAction()
@@ -195,58 +192,70 @@ namespace YouTubeMp3Player.Views
 
         private void Repeat_Clicked(object sender, EventArgs e)
         {
-            isLooping = !isLooping;
+            if (isInitialized)
+            {
+                isLooping = !isLooping;
 
-            if(isLooping)
-            {
-                CrossMediaManager.Current.RepeatMode = MediaManager.Playback.RepeatMode.One;
-                activateIcon(RepeatIco);
-            }
-            else
-            {
-                CrossMediaManager.Current.RepeatMode = MediaManager.Playback.RepeatMode.Off;
-                deactivateIcon(RepeatIco);
+                if (isLooping)
+                {
+                    CrossMediaManager.Current.RepeatMode = MediaManager.Playback.RepeatMode.One;
+                    activateIcon(RepeatIco);
+                }
+                else
+                {
+                    CrossMediaManager.Current.RepeatMode = MediaManager.Playback.RepeatMode.Off;
+                    deactivateIcon(RepeatIco);
+                }
             }
         }
 
         private void AddToFavourites_Clicked(object sender, EventArgs e)
         {
-            if (tracks != null || tracks.Count != 0)
+            if (isInitialized)
             {
-                Track track = tracks.Find(x => x.Uri == CrossMediaManager.Current.Queue.Current.MediaUri);
+                if (tracks != null || tracks.Count != 0)
+                {
+                    Track track = tracks.Find(x => x.Uri == CrossMediaManager.Current.Queue.Current.MediaUri);
 
-                if (!App.PlaylistDatabase.IsFavourite(track))
-                {
-                    App.PlaylistDatabase.AddToFavourites(track);
-                    activateIcon(AddToFavouritesIco);
-                }
-                else
-                {
-                    App.PlaylistDatabase.DeleteFromFavourites(track);
-                    deactivateIcon(AddToFavouritesIco);
+                    if (!App.PlaylistDatabase.IsFavourite(track))
+                    {
+                        App.PlaylistDatabase.AddToFavourites(track);
+                        activateIcon(AddToFavouritesIco);
+                    }
+                    else
+                    {
+                        App.PlaylistDatabase.DeleteFromFavourites(track);
+                        deactivateIcon(AddToFavouritesIco);
+                    }
                 }
             }
         }
 
         private void AddToPlaylist_Clicked(object sender, EventArgs e)
         {
-            string trackUri = CrossMediaManager.Current.Queue.Current.MediaUri;
-
-            if (File.Exists(trackUri))
+            if (isInitialized)
             {
-                App.AddToPlaylistTrack = tracks.Find(x => x.Uri == trackUri);
+                string trackUri = CrossMediaManager.Current.Queue.Current.MediaUri;
 
-                Navigation.PushModalAsync(new AddToPlaylistPage());
-            }
-            else
-            {
-                DisplayAlert("Error", "Nejdříve vyberte skladbu", "OK");
+                if (File.Exists(trackUri))
+                {
+                    App.AddToPlaylistTrack = tracks.Find(x => x.Uri == trackUri);
+
+                    Navigation.PushModalAsync(new AddToPlaylistPage());
+                }
+                else
+                {
+                    DisplayAlert("Error", "Nejdříve vyberte skladbu", "OK");
+                }
             }
         }
 
         private async void PlayButton_Clicked(object sender, EventArgs e)
         {
-            await CrossMediaManager.Current.PlayPause();
+            if (isInitialized)
+            {
+                await CrossMediaManager.Current.PlayPause();
+            }
         }
 
         private async void AudioSlider_ValueChanged(object sender, ValueChangedEventArgs e)

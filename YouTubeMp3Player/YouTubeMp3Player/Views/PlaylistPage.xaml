@@ -9,8 +9,26 @@
                 HorizontalScrollBarVisibility="Never"
                 BackgroundColor="White">
 
-        <FlexLayout x:Name="TracksContainer"
-                    Wrap="Wrap">
-        </FlexLayout>
+        <StackLayout x:Name="TracksContainer"
+                     Margin="5">
+            <!--
+            <Frame HeightRequest="50"
+                   Padding="0"
+                   Margin="5, 2">
+                <FlexLayout HorizontalOptions="FillAndExpand"
+                            BackgroundColor="Blue">
+                    <Image Source="track_ico.png"
+                           WidthRequest="50"
+                           HeightRequest="50"/>
+                    <Label Text="Playlist name"
+                           HorizontalOptions="CenterAndExpand"
+                           BackgroundColor="Red"
+                           HeightRequest="50"
+                           HorizontalTextAlignment="End"
+                           VerticalTextAlignment="Center"/>
+                </FlexLayout>
+            </Frame>
+            -->
+        </StackLayout>
     </ScrollView>
 </ContentPage>
