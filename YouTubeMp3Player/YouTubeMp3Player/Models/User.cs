@@ -14,6 +14,7 @@ namespace YouTubeMp3Player.Models
         [Unique]
         public string Email { get; set; }
         public string Password { get; set; }
+        public string ErrorDescription { get; set; }
 
         public User() { }
         public User(string username, string password, string email)
@@ -29,16 +30,20 @@ namespace YouTubeMp3Player.Models
             this.Password = password;
         }
 
-        public bool VertifyData()
+        public bool VertifyData(bool hasUsername = false)
         {
             if (this.Password == null || this.Password == null || this.Password == "" || this.Password == "" || this.Email == null || this.Email == null || this.Email == "" || this.Email == "")
             {
                 return false;
             }
-            else
+            else if (hasUsername)
             {
-                return true;
+                if (this.Password == null || this.Password == null || this.Password == "" || this.Password == "" || this.Email == null || this.Email == null || this.Email == "" || this.Email == "" || this.Username == null || this.Username == null || this.Username == "" || this.Username == "")
+                {
+                    return false;
+                }
             }
+            return true;
         }
     }
 }

@@ -65,5 +65,30 @@ namespace YouTubeMp3Player.Data
 
             return user;
         }
+
+        public async Task<User> PostResponseRegisterUser(string webUrl, FormUrlEncodedContent content)
+        {
+            HttpResponseMessage response = await client.PostAsync(webUrl, content);
+            string jsonResult = response.Content.ReadAsStringAsync().Result;
+            User user = JsonConvert.DeserializeObject<User>(jsonResult);
+
+            return user;
+        }
+
+        public async Task<User> RegisterUser(User user)
+        {
+            // Form token data to post
+            List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
+            postData.Add(new KeyValuePair<string, string>("username", user.Username));
+            postData.Add(new KeyValuePair<string, string>("email", user.Email));
+            postData.Add(new KeyValuePair<string, string>("password", user.Password));
+
+            FormUrlEncodedContent content = new FormUrlEncodedContent(postData);
+
+            // Get user
+            User registredUser = await PostResponseRegisterUser(Constants.RegisterUrl, content);
+
+            return registredUser;
+        }
     }
 }

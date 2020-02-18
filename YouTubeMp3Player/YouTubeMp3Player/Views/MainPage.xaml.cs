@@ -29,8 +29,9 @@ namespace YouTubeMp3Player.Views
             NavigationPage.SetHasNavigationBar(this, false);
 
             // Initialize pages 
-            this.Children.Add(new MusicPlayer(track, playlist) { Title = "Music Player", IconImageSource = "player_ico.png" });
-            this.Children.Add(new PlaylistsPage() { Title = "Playlists", IconImageSource = "playlist_ico.png" });
+            this.Children.Add(new MusicPlayer(track, playlist) { Title = "Hudební přehrávač", IconImageSource = "player_ico.png" });
+            this.Children.Add(new PlaylistsPage() { Title = "Playlisty", IconImageSource = "playlist_ico.png" });
+            this.Children.Add(new DownloadFromYouTube() { Title = "Stáhnout", IconImageSource = "youtube_ico.png" });
         }
     }
 }

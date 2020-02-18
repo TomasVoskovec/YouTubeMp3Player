@@ -16,10 +16,10 @@ namespace YouTubeMp3Player.Views
         public LoginPage()
         {
             InitializeComponent();
-            Init();
+            init();
         }
 
-        void Init()
+        void init()
         {
             App.StartCheckInternet(NoInternetLabel, this);
 
@@ -136,7 +136,7 @@ namespace YouTubeMp3Player.Views
 
         async void RegisterLink_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new MainPage()));
+            await Navigation.PushModalAsync(new RegistrationPage());
         }
     }
 }

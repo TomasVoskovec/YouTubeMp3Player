@@ -24,7 +24,7 @@ namespace YouTubeMp3Player.Models
         // Font sizes
         public static double TextL = 20;
         public static double TextM = 18;
-        public static double TextS = 12;
+        public static double TextS = 15;
 
         //Server
         public static string ServerUrl = "https://voskoto16.sps-prosek.cz";
@@ -32,6 +32,7 @@ namespace YouTubeMp3Player.Models
         // Login
         public static string LoginUrl = Constants.ServerUrl + "/YouTubeMp3Player/api/login.php";
         public static string ValidateTokenUrl = Constants.ServerUrl + "/YouTubeMp3Player/api/validate_token.php";
+        public static string RegisterUrl = Constants.ServerUrl + "/YouTubeMp3Player/api/create_user.php";
 
         // Messages
         public static string NoInternetText = "No internet connection, please reconnect your device.";

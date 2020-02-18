@@ -239,9 +239,9 @@ namespace YouTubeMp3Player.Views
 
                 if (File.Exists(trackUri))
                 {
-                    App.AddToPlaylistTrack = tracks.Find(x => x.Uri == trackUri);
+                    Track addToPlaylistTrack = tracks.Find(x => x.Uri == trackUri);
 
-                    Navigation.PushModalAsync(new AddToPlaylistPage());
+                    Navigation.PushModalAsync(new AddToPlaylistPage(addToPlaylistTrack));
                 }
                 else
                 {

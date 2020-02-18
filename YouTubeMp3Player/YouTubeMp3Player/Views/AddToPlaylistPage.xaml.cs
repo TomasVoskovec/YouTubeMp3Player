@@ -18,11 +18,12 @@ namespace YouTubeMp3Player.Views
         List<Playlist> playlists = App.PlaylistDatabase.GetAllPlaylists();
         Dictionary<Button, Playlist> playlistButtons = new Dictionary<Button, Playlist>();
 
-        Track addToPlaylistTrack = App.AddToPlaylistTrack;
+        Track addToPlaylistTrack;
 
-        public AddToPlaylistPage()
+        public AddToPlaylistPage(Track track)
         {
             InitializeComponent();
+            addToPlaylistTrack = track;
             init();
         }
 

@@ -11583,6 +11583,9 @@ namespace YouTubeMp3Player.Droid
 			// aapt resource value: 0x7F070165
 			public const int track_ico = 2131165541;
 			
+			// aapt resource value: 0x7F070166
+			public const int youtube_ico = 2131165542;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

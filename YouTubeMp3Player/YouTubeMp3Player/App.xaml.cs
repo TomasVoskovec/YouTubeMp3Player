@@ -18,13 +18,10 @@ namespace YouTubeMp3Player
         static PlaylistDatabase playlistDatabase;
         static RestService restService;
         static Label labelScreen;
-        static Page currentPage;
         static Timer timer;
 
         static bool hasInternet;
         static bool noInternetShow;
-
-        public static Track AddToPlaylistTrack;
 
         public App()
         {
@@ -103,7 +100,6 @@ namespace YouTubeMp3Player
             label.Text = Constants.NoInternetText;
             label.IsVisible = false;
             hasInternet = false;
-            currentPage = page;
 
             if (!CheckInternet())
             {
