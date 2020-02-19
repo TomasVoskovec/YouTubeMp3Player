@@ -180,4 +180,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\prev_ico.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

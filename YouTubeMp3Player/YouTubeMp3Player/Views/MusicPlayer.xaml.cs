@@ -3,6 +3,7 @@ using Plugin.CrossPlatformTintedImage.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Timers;
 using VideoLibrary;
 using Xamarin.Forms;

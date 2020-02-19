@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,9 +20,9 @@ namespace YouTubeMp3Player.Views
 
         string getUrlParameter (string paramKey, string url)
         {
-            string videoId = null; 
+            string videoId = ""; 
 
-            if (url != null && url != "" && paramKey != null && paramKey != "")
+            if (url != null /*&& url != "" && paramKey != null && paramKey != ""*/)
             {
                 Uri myUri = new Uri(url);
                 videoId = HttpUtility.ParseQueryString(myUri.Query).Get(paramKey);
@@ -34,17 +35,21 @@ namespace YouTubeMp3Player.Views
             return videoId;
         }
 
-        async private void YouTubeDownloadButton_Clicked(object sender, EventArgs e)
+        private async void YouTubeDownloadButton_Clicked(object sender, EventArgs e)
         {
-            string videoId = getUrlParameter("v", YouTubeVideoLink.Text);
+            string videoId;
+            if (YouTubeVideoLink.Text != null)
+            {
+                videoId = getUrlParameter("v", YouTubeVideoLink.Text);
+            }
+            else
+            {
+                videoId = null;
+            }
 
             if (videoId != null && videoId != "")
             {
-                YouTubeVideoLink.IsVisible = false;
-                YouTubeDownloadButton.IsVisible = false;
-
-                YouTubeApi.Source = "http://voskoto16.sps-prosek.cz/YouTubeMp3Player/api/download?VideoID=" + videoId;
-                YouTubeApi.IsVisible = true;
+                //await Browser.OpenAsync("https://break.tv/widget/button/?link=https://www.youtube.com/watch?v=" + videoId, BrowserLaunchMode.External);
             }
 
             else

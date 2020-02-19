@@ -10,18 +10,6 @@
         <FlexLayout x:Name="PlaylistsContainer"
                     FlowDirection="LeftToRight"
                     Wrap="Wrap">
-            <!--
-            <Frame HasShadow="False">
-                <StackLayout>
-                    <Image Source="track_ico.png"
-                           WidthRequest="200"/>
-                    <Label Text="Playlist name"
-                           WidthRequest="200"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center"/>
-                </StackLayout>
-            </Frame>
-            -->
         </FlexLayout>
     </ScrollView>
 </ContentPage>

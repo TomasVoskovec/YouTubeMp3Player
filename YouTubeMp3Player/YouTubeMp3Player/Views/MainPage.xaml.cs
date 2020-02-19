@@ -31,7 +31,7 @@ namespace YouTubeMp3Player.Views
             // Initialize pages 
             this.Children.Add(new MusicPlayer(track, playlist) { Title = "Hudební přehrávač", IconImageSource = "player_ico.png" });
             this.Children.Add(new PlaylistsPage() { Title = "Playlisty", IconImageSource = "playlist_ico.png" });
-            this.Children.Add(new DownloadFromYouTube() { Title = "Stáhnout", IconImageSource = "youtube_ico.png" });
+            //this.Children.Add(new DownloadFromYouTube() { Title = "Stáhnout", IconImageSource = "youtube_ico.png" });
         }
     }
 }

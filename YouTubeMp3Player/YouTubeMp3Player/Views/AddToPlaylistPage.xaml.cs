@@ -110,13 +110,15 @@ namespace YouTubeMp3Player.Views
 
         private void AddNewPlaylist_Clicked(object sender, EventArgs e)
         {
-            if (NewPlaylistName.Text != "")
+            if (NewPlaylistName.Text != null && NewPlaylistName.Text != "")
             {
                 Playlist newPlaylist = new Playlist(NewPlaylistName.Text, new List<Track>{addToPlaylistTrack});
                 playlists.Add(newPlaylist);
                 updatePlaylists();
 
                 App.PlaylistDatabase.SavePlaylist(newPlaylist);
+
+                NewPlaylistName.Text = "";
             }
         }
     }

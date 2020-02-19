@@ -46,10 +46,11 @@ namespace YouTubeMp3Player.Views
                     gestureRecognizer.Tapped += onPlaylistClicked;
 
                     StackLayout stack = new StackLayout();
-                    stack.GestureRecognizers.Add(gestureRecognizer);
-                    stack.Margin = width * 0.05;
                     stack.Children.Add(image);
                     stack.Children.Add(label);
+                    stack.VerticalOptions = LayoutOptions.Start;
+                    stack.GestureRecognizers.Add(gestureRecognizer);
+                    stack.Margin = width * 0.05;
 
                     playlistsDictionary.Add(stack, playlist);
                     PlaylistsContainer.Children.Add(stack);
